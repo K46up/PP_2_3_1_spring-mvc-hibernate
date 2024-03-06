@@ -1,10 +1,50 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>All users</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td, th {
+            border: 1px solid black;
+            padding: 5px;
+        }
+
+        td {
+            word-wrap: break-word;
+        }
+    </style>
 </head>
 <body>
-
+<a href="/spring_2.3.1/addUser">
+    <input type="submit" value="Добавить пользователя">
+</a>
+<div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Age</th>
+            <th>Email</th>
+            <th>Действие</th>
+        </tr>
+        <tr th:each="user : ${people}">
+            <td> <a th:href="@{/{id}(id=${user.getId()})}" th:text="${user.id}">ID</a> </td>
+            <td th:text="${user.getFirstName()}">FirstName</td>
+            <td th:text="${user.getLastName()}">LastName</td>
+            <td th:text="${user.getAge()}">Age</td>
+            <td th:text="${user.getEmail()}">Email</td>
+            <td th:align=center>
+                <a th:href="@{/delete_user(id=${user.getId()})}">Удалить</a>
+            </td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

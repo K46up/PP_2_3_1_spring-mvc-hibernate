@@ -3,13 +3,11 @@ package web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import web.model.User;
 import web.service.UserService;
 
 @Controller
-@RequestMapping("/people")
 public class UserController {
     private final UserService userService;
 
@@ -17,9 +15,45 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
-        public String printListCar(@RequestParam(value = "count", defaultValue = "0") int count, Model model) {
+    @GetMapping("/people")                                                                                 //работает
+        public String printListUsers(Model model) {
         model.addAttribute("people", userService.getAll());
         return "people";
     }
+
+    @GetMapping("/delete_user")                                                                            //работает
+    public String deleteUserById(@RequestParam(name = "id") Long id) {
+        userService.delete(id);
+        return "redirect:/people";
+    }
+    @GetMapping("/addUser")                                                                                //работает
+    public String formAddUser(@ModelAttribute("user") User user) {
+
+        return "addUser";
+    }
+
+    @PostMapping("/addUser")                                                                               //работает
+    public String addUser(@ModelAttribute("user") User user) {
+        userService.add(user);
+        return "redirect:/people";
+    }
+
+    @GetMapping("show_single_user")
+    public String showSingleUser(@RequestParam(value = "id") Long id, Model model) {
+        model.addAttribute("user", userService.getById(id));
+        return "userByID";
+    }
+
+    @GetMapping(value = "/edit_user")
+    public String showFormForUpdateUser(@RequestParam(name = "id") Long id, Model model) {
+        model.addAttribute("user", userService.getById(id));
+        return "editUserForm";
+    }
+
+    @PostMapping("/edit_user")
+    public String update(@ModelAttribute("user") User user) {
+        userService.update(user);
+        return "redirect:/users";
+    }
+
 }
