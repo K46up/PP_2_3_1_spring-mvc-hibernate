@@ -38,22 +38,16 @@ public class UserController {
         return "redirect:/people";
     }
 
-    @GetMapping("show_single_user")
+    @GetMapping("/user")                                                                                   //работает
     public String showSingleUser(@RequestParam(value = "id") Long id, Model model) {
         model.addAttribute("user", userService.getById(id));
-        return "userByID";
+        return "user";
     }
 
-    @GetMapping(value = "/edit_user")
-    public String showFormForUpdateUser(@RequestParam(name = "id") Long id, Model model) {
-        model.addAttribute("user", userService.getById(id));
-        return "editUserForm";
-    }
-
-    @PostMapping("/edit_user")
+    @PostMapping("/update")                                                                                //работает
     public String update(@ModelAttribute("user") User user) {
         userService.update(user);
-        return "redirect:/users";
+        return "redirect:/people";
     }
 
 }

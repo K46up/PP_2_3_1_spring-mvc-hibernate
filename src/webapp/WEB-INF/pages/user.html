@@ -7,12 +7,28 @@
 </head>
 <body>
 <h3>Пользователь# <span th:text="${user.id}"/></h3>
-<p>
-    <a th:text="${user.getFirstName()}"></a>
-    <a th:text="${user.getLastName()}"></a>
-    <a th:text="${user.getBirthDay()}"></a>
-</p>
+
+<form th:method="post" th:action="@{/update(id=${user.getId()})}" th:object="${user}">
+    <label for="firstName"> Имя: </label>
+    <input type="text" th:field="*{firstName}" id="firstName"/>
+    <br/>
+    <br/>
+    <label for="lastName"> Фамилия: </label>
+    <input type="text" th:field="*{lastName}" id="lastName"/>
+    <br/>
+    <br/>
+    <label for="age"> Возраст: </label>
+    <input type="number" th:field="*{age}" id="age"/>
+    <br/>
+    <br/>
+    <label for="email"> Email: </label>
+    <input type="text" th:field="*{email}" id="email"/>
+    <br/>
+    <br/>
+    <input type="submit" value="Сохранить"/>
+</form>
+
 <br>
-<a href="/users">Вернуться к списку пользователей</a>
+<a href="/people">Вернуться к списку пользователей</a>
 </body>
 </html>
