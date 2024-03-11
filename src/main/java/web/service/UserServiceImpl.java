@@ -9,13 +9,13 @@ import web.dao.UserDao;
 import java.util.List;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
 
     @Override
+    @Transactional
     public void add(User user) {
         userDao.add(user);
     }
@@ -31,11 +31,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         userDao.delete(id);
     }
 
     @Override
+    @Transactional
     public void update(User user) {
         userDao.update(user);
     }
